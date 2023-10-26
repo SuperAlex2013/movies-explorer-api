@@ -5,7 +5,7 @@ const celebrateErr = (err, req, res, next) => {
     // 'err' is an instance of CelebrateError
     const validationError = {};
     err.details.forEach((value, key) => {
-      validationError[key] = value.msg;
+      validationError[key] = value.message;
     });
     return res.status(400).json(validationError);
   }

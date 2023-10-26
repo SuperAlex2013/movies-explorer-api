@@ -14,9 +14,9 @@ app.use(router);
 
 setupErrorHandlers(app);
 // ----------------------------------- Настройки сервера и БД --------------------------------/
-const { NODE_ENV, DB, PORT = 3000 } = process.env;
+const { PORT = 3000 } = process.env;
 
-mongoose.connect(NODE_ENV === 'production' ? DB : DB_DEV, {
+mongoose.connect(DB_DEV, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

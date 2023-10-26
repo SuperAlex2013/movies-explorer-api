@@ -9,17 +9,25 @@ const app = express();
 
 setupMiddlewares(app);
 
-// Добавление данных / роутинги
 app.use(router);
 
 setupErrorHandlers(app);
-// ----------------------------------- Настройки сервера и БД --------------------------------/
-const { PORT = 3000 } = process.env;
 
-mongoose.connect(DB_DEV, {
+const { PORT = 3000, NODE_ENV, DB_PROD } = process.env;
+
+const dbConnectionString = NODE_ENV === 'production' ? DB_PROD : DB_DEV;
+
+mongoose.connect(dbConnectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-});
+})
+  .then(() => {
+    console.log('Connected to the database');
+  })
+  .catch((err) => {
+    console.error('Database connection error', err);
+    process.exit(1);
+  });
 
 app.listen(PORT, () => {
   console.log(`App is running on port ${PORT}`);

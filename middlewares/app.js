@@ -21,10 +21,11 @@ const setupMiddlewares = (app) => {
 
 const setupErrorHandlers = (app) => {
   // Обработчик ошибок валидации Celebrate
+  app.use(errorLogger);
   app.use(celebrateErr);
 
   // Логгирование ошибок
-  app.use(errorLogger);
+
   app.use(errors());
   app.use(serverLog);
 };
